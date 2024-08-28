@@ -1,0 +1,73 @@
+<div
+  class="calendar-container p-4 d-flex justify-content-center align-items-center h-100"
+>
+  <div class="calendar row flex-column flex-md-row m-4">
+    <div class="calendar-header p-0 d-flex flex-column col-12 col-md-3">
+      <div class="d-flex flex-column flex-grow-1">
+        <div class="day-name text-center">
+          {{ currentDate | date : "EEEE" }}
+        </div>
+        <div
+          class="sub-header d-flex flex-column justify-content-center align-items-center"
+        >
+          <h1 class="date mb-0">{{ currentDate | date : "d" }}</h1>
+          <h4 class="month mt-2">{{ currentDate | date : "MMMM" }}</h4>
+        </div>
+        <h4 class="year text-center">{{ currentDate | date : "yyyy" }}</h4>
+      </div>
+    </div>
+    <div class="calendar-body col-12 col-md-9 d-flex flex-column">
+      <div class="body-content d-flex flex-column">
+        <div
+          class="calendar-nav d-flex flex-wrap justify-content-between mb-4 row"
+        >
+          <div
+            class="month-nav d-flex justify-content-start align-items-center col-4"
+          >
+            <button mat-icon-button (click)="previousMonth()">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span>{{ currentDate | date : "MMMM" }}</span>
+            <button mat-icon-button (click)="nextMonth()">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+          <div class="today-button d-flex justify-content-center col-4">
+            <button mat-button color="white" (click)="goToToday()">
+              Today
+            </button>
+          </div>
+          <div
+            class="year-nav d-flex justify-content-end align-items-center col-4"
+          >
+            <button mat-icon-button (click)="previousYear()">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span>{{ currentDate | date : "yyyy" }}</span>
+            <button mat-icon-button (click)="nextYear()">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="calendar-grid">
+          @for (day of WEEK_DAYS; track $index) {
+          <div
+            class="week-day d-flex justify-content-center align-items-center"
+          >
+            {{ day }}
+          </div>
+          } @for (date of dates; track $index) {
+          <div
+            class="day d-flex justify-content-center align-items-center"
+            [class.selected]="isSelected(date)"
+            [class.non-current]="date.getMonth() !== currentDate.getMonth()"
+            (click)="selectDate(date)"
+          >
+            {{ date | date : "d" }}
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
